@@ -34,6 +34,7 @@ class PostFormView(FormView):
         post = form.save(commit=False)
         post.author = self.request.user
         post.published_at = timezone.now()
+        post.save_img()
         post.save()
         return redirect(to='post_detail', pk=post.pk)
 

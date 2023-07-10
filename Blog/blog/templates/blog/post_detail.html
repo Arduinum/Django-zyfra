@@ -13,6 +13,9 @@
                 <div class="date">опубликован: {{ object.published_at }}</div>
             {% endif %}
         </div>
+        {% if post.photo %}
+            <img src="/media/{{ post.photo }}" alt="photo">
+        {% endif %}
         <p>{{ object.text|linebreaksbr }}</p>
     </div>
 {% endblock %}
