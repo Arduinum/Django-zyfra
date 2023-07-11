@@ -6,7 +6,7 @@
             <p>опубликован: {{ post.published_at }}</p>
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             {% if post.photo %}
-                <img src="/media/{{ post.photo }}" alt="photo">
+                <img class="img-preview" src="/media/{{ post.photo }}" alt="photo">
             {% endif %}
             <p>{{ post.text|linebreaksbr }}</p>
         </div>
