@@ -55,12 +55,11 @@ class Post(models.Model):
     def save_img(self):
         """Метод для сохранения ужатого изображения"""
         if not self.id:
-            self.photo = self.compressImg(self.photo)
+            self.photo = self.compress_img(self.photo)
 
-    def compressImg(self, img):
+    def compress_img(self, img):
         """Метод класса для сжатия изображения"""
         # открываем исходное img
-        print(img)
         img_transitory = Image.open(img)
         # объект для работы с байтами файла
         work_bytes = BytesIO()

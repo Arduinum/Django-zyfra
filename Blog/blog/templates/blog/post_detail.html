@@ -1,5 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load thumbnail %}
+{% load custom_filters %}
 
 {% block content %}
     <div class="post">
@@ -20,6 +21,6 @@
                 width="{{ ph.width }}" height="{{ ph.height }}" alt="photo">
             {% endthumbnail %} 
         {% endif %}
-        <p>{{ object.text|linebreaksbr }}</p>
+        <p>{{ object.text|linebreaksbr|nums_to_text }}</p>
     </div>
 {% endblock %}
