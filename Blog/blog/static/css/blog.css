@@ -51,8 +51,3 @@ h1, h2, h3, h4 {
     display: flex;
     justify-content: space-between;
 }
-
-.img-preview {
-    width: 320px;
-    height: 200px;
-}

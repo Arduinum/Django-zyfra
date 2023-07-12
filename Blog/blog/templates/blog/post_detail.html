@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load thumbnail %}
 
 {% block content %}
     <div class="post">
@@ -14,7 +15,10 @@
             {% endif %}
         </div>
         {% if post.photo %}
-            <img src="/media/{{ post.photo }}" alt="photo">
+            {% thumbnail post.photo "800x600" crop="center" as ph %}
+                <img src="/media/{{ post.photo }}" 
+                width="{{ ph.width }}" height="{{ ph.height }}" alt="photo">
+            {% endthumbnail %} 
         {% endif %}
         <p>{{ object.text|linebreaksbr }}</p>
     </div>
