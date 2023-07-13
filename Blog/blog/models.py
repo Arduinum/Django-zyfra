@@ -59,27 +59,30 @@ class Post(models.Model):
 
     def compress_img(self, img):
         """Метод класса для сжатия изображения"""
-        # открываем исходное img
-        img_transitory = Image.open(img)
-        # объект для работы с байтами файла
-        work_bytes = BytesIO()
-        # изменение размера img
-        # img_resized = img_transitory.resize((800, 600))
-        name_jpg = f'{img.name.split(".")[0]}.jpg'
-        # сохраняем изменённое изображение с качеством 60
-        img_transitory.save(fp=work_bytes, format='JPEG', quality=60)
-        work_bytes.seek(0)  # установка позиции чтения/записи в начало объекта
-        # создаём оптимизированную версию изображения
-        img = InMemoryUploadedFile(
-            file=work_bytes, 
-            field_name='imageField', 
-            name=name_jpg,
-            content_type='image/jpeg',
-            size=getsizeof(work_bytes),
-            charset=None
-        )
+        try:
+            # открываем исходное img
+            img_transitory = Image.open(img)
+            # объект для работы с байтами файла
+            work_bytes = BytesIO()
+            # изменение размера img
+            # img_resized = img_transitory.resize((800, 600))
+            name_jpg = f'{img.name.split(".")[0]}.jpg'
+            # сохраняем изменённое изображение с качеством 60
+            img_transitory.save(fp=work_bytes, format='JPEG', quality=60)
+            work_bytes.seek(0)  # установка позиции чтения/записи в начало объекта
+            # создаём оптимизированную версию изображения
+            img = InMemoryUploadedFile(
+                file=work_bytes, 
+                field_name='imageField', 
+                name=name_jpg,
+                content_type='image/jpeg',
+                size=getsizeof(work_bytes),
+                charset=None
+            )
+            return img
+        except Exception as err:
+            print(err)
         return img
-
 
     def __str__(self):
         return self.title

@@ -8,15 +8,16 @@ form = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>\
 
 def application(env, start_response):
     path = env.get('PATH_INFO', '/')
+    headers = ('Content-Type', 'text/html; charset=utf-8')
 
     if path == '/':
-        start_response('200 OK', [('Content-Type','text/html')])
+        start_response('200 OK', [headers])
         return [b'Hello World']
     elif path == '/about':
-        start_response('200 OK', [('Content-Type', 'text/html')])
+        start_response('200 OK', [headers])
         return [b"it's me"]
     elif path == '/say_hello':
-        start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
+        start_response('200 OK', [headers])
         name = env['wsgi.input'].read()
         print(name)
         if name:
