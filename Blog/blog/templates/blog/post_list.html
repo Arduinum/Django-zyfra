@@ -12,7 +12,7 @@
                     width="{{ ph.width }}" height="{{ ph.height }}" alt="photo">
                 {% endthumbnail %}    
             {% endif %}
-            <p>{{ post.text|linebreaksbr }}</p>
+            <p>{{ post.text|safe }}</p>
         </div>
     {% endfor %}
 {% endblock %}

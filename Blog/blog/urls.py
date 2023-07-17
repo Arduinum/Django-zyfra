@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from blog.views import PostListView, PostDetailView, PostFormView, AuthorListView
@@ -8,7 +8,8 @@ urlpatterns = [
     path('post/authors', AuthorListView.as_view(), name='authors_list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/new', PostFormView.as_view(), name='post_new'),
-    path('post/<int:pk>/edit/', PostFormView.as_view(), name='post_edit')
+    path('post/<int:pk>/edit/', PostFormView.as_view(), name='post_edit'),
+    path('tinymce/', include('tinymce.urls'))
 ]
 
 if settings.DEBUG:

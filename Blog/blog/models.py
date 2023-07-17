@@ -1,11 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils import timezone
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 from PIL import Image
 from sys import getsizeof
+from tinymce import models as tinymce_models
 
 
 class Post(models.Model):
@@ -28,7 +28,7 @@ class Post(models.Model):
         blank=True
     )
 
-    text = models.TextField(
+    text = tinymce_models.HTMLField(
         verbose_name='содержимое'
     )
 
