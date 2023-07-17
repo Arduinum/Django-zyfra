@@ -1,6 +1,8 @@
 from django.views.generic import ListView, DetailView, FormView
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.db.models import Count, Max
 from blog.forms import PostForm
 from blog.models import Post
 
@@ -13,6 +15,18 @@ class PostListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(published_at__lte=timezone.now()).order_by('-published_at')
+
+
+class AuthorListView(ListView):
+    """Класс контроллер для отображения списка авторов"""
+    model = Post
+    queryset = dict()
+    queryset['posts'] = Post.objects.values('author')\
+        .annotate(sum_post=Count('author'), last_date=Max('created_at'))
+    queryset['authors'] = User.objects.values('id', 'username')
+    template_name = 'blog/authors_list.html'
+    context_object_name = 'data'
+
 
 class PostDetailView(DetailView):
     """Класс контроллер для отображения одного поста"""

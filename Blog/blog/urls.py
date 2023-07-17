@@ -1,10 +1,11 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import PostListView, PostDetailView, PostFormView
+from blog.views import PostListView, PostDetailView, PostFormView, AuthorListView
 
 urlpatterns = [
     path('', PostListView.as_view(), name='post_list'),
+    path('post/authors', AuthorListView.as_view(), name='authors_list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('post/new', PostFormView.as_view(), name='post_new'),
     path('post/<int:pk>/edit/', PostFormView.as_view(), name='post_edit')

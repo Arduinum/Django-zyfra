@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+    {% block content %}
+        <table class="table">
+            <caption>Таблица авторов</caption>
+            <tr>
+                <th scope="col">Автор</th>
+                <th scope="col">Всего статей</th>
+                <th scope="col">Дата последней статьи</th>
+            </tr>
+            {% for user in data.authors %}
+                <tr>
+                    <td scope="row">{{ user.username }}</td>
+                    {% for post in data.posts %}
+                        {% if user.id == post.author %}    
+                            <td scope="row">{{ post.sum_post }}</td>
+                            <td scope="row">{{ post.last_date }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}

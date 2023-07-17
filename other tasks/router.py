@@ -27,7 +27,7 @@ def application(env, start_response):
             return [answer.encode('utf-8')]
         return [form.encode('utf-8')]
     else:
-        start_response('404 Not Found', [('Content-Type', 'text/html')])
+        start_response('404 Not Found', [headers])
         return [b'Page not found!']
 
 # старт сервера с настройками:
