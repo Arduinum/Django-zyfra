@@ -1,0 +1,12 @@
+version: "2.18.1"
+
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - 8090:8090
+    command: bash -c "python manage.py migrate
+      && python manage.py loaddata zyfra-blog.json
+      && python manage.py runserver 0.0.0.0:8090
+      "

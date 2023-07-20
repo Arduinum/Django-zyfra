@@ -161,3 +161,9 @@ cython_debug/
 
 # for img
 media/
+
+# for dump db
+zyfra-blog.json
+
+# for data
+data.py
