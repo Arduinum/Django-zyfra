@@ -8,15 +8,11 @@
                 <th scope="col">Всего статей</th>
                 <th scope="col">Дата последней статьи</th>
             </tr>
-            {% for user in data.authors %}
+            {% for user in data %}
                 <tr>
-                    <td scope="row">{{ user.username }}</td>
-                    {% for post in data.posts %}
-                        {% if user.id == post.author %}    
-                            <td scope="row">{{ post.sum_post }}</td>
-                            <td scope="row">{{ post.last_date }}</td>
-                        {% endif %}
-                    {% endfor %}
+                    <td scope="row">{{ user.user_name }}</td>   
+                    <td scope="row">{{ user.sum_post }}</td>
+                    <td scope="row">{{ user.last_date }}</td>
                 </tr>
             {% endfor %}
         </table>

@@ -21,6 +21,6 @@
                 width="{{ ph.width }}" height="{{ ph.height }}" alt="photo">
             {% endthumbnail %} 
         {% endif %}
-        <p>{{ object.text|nums_to_text|safe }}</p>
+        <p>{{ object.text|safe }}</p>
     </div>
 {% endblock %}
