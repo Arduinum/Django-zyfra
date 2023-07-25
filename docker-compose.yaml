@@ -8,6 +8,24 @@ services:
       - 8090:8090
     volumes:
       - data_zyfra_blog:/data
-    command: bash -c "python manage.py runserver 0.0.0.0:8090"
+    command: bash -c "
+      ./wait-for-postgres.sh db
+      && python manage.py migrate
+      && python manage.py loaddata zyfra-blog.json
+      && python manage.py runserver 0.0.0.0:8090"
+    depends_on:
+      - db
+  db:
+    image: postgres:13.11
+    ports:
+      # внешний/внутрений
+      - 5480:5432
+    environment:
+        POSTGRES_USER: django_zyfra
+        POSTGRES_PASSWORD: django228
+        POSTGRES_DB: zyfra_blog_db
+    volumes:
+      - postgres_zyfra:/var/lib/postgresql/data
 volumes:
   data_zyfra_blog:
+  postgres_zyfra:
