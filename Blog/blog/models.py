@@ -32,6 +32,11 @@ class Post(models.Model):
         verbose_name='содержимое'
     )
 
+    is_published = models.BooleanField(
+        verbose_name='статус публикации',
+        default=False
+    )
+
     created_at = models.DateTimeField(
         verbose_name='создан',
         auto_now_add=True
@@ -44,8 +49,7 @@ class Post(models.Model):
 
     published_at = models.DateTimeField(
         verbose_name='опубликован',
-        blank=True,
-        null = True
+        blank=True
     )
 
     def publish(self):

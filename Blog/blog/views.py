@@ -1,6 +1,7 @@
 from django.db.models import F
 from django.views.generic import ListView, DetailView, FormView
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import Http404
 from django.utils import timezone
 from django.db.models import Count, Max
 from blog.forms import PostForm
@@ -14,7 +15,7 @@ class PostListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(published_at__lte=timezone.now()).order_by('-published_at')
+        return queryset.filter(published_at__lte=timezone.now()).filter(is_published=True).order_by('-published_at')
 
 
 class AuthorListView(ListView):
@@ -36,6 +37,18 @@ class PostDetailView(DetailView):
     """Класс контроллер для отображения одного поста"""
     model = Post
     template_name = 'blog/post_detail.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.kwargs.get('pk'):
+            queryset = super().get_queryset().get(id=self.kwargs.get('pk'))
+            http_404 = Http404('Page not found 404')
+
+            if not request.user.is_superuser and not queryset.is_published:
+                raise http_404
+            elif request.user.id != queryset.author.id and not queryset.is_published:
+                raise http_404
+        
+        return super().dispatch(request, *args, **kwargs)
 
 
 class PostFormView(FormView):

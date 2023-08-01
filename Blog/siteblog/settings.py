@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sorl.thumbnail',
+    'django_celery_beat',
     'tinymce',
+    'redis',
     'blog'
 ]
 
@@ -90,7 +92,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('NAME'),
-        'USER': os.getenv('USER'),
+        'USER': os.getenv('USER_DB'),
         'PASSWORD': os.getenv('PASSWORD'),
         'HOST': os.getenv('HOST'),
         'PORT': os.getenv('PORT')
@@ -144,3 +146,27 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = os.getenv('URL_REDIS')
+CELERY_RESULT_BACKEND = os.getenv('URL_REDIS')
+CELERY_ENABLE_UTC = False
+CELERY_TIMEZONE = 'Europe/Moscow'
+
+CELERY_IMPORTS = (
+    'blog.task',
+)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler'
+        }
+    },
+    'root': {
+        'heandlers': ['console'],
+        'level': 'INFO'
+    }
+}
