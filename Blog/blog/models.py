@@ -39,7 +39,7 @@ class Post(models.Model):
 
     created_at = models.DateTimeField(
         verbose_name='создан',
-        auto_now_add=True
+        default=timezone.now
     )
 
     updated_at = models.DateTimeField(
@@ -49,7 +49,8 @@ class Post(models.Model):
 
     published_at = models.DateTimeField(
         verbose_name='опубликован',
-        blank=True
+        blank=True,
+        null=True
     )
 
     def publish(self):

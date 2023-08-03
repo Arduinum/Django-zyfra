@@ -13,10 +13,9 @@ class PublicPosts:
     """Класс для работы с публикациями постов"""
 
     @staticmethod    
-    def get_ready_post_bubl():
+    def get_ready_post_bubl(model_post):
         """Метод класса для фильтрации постов, готовых к публикации"""
-        
-        return Post.objects.filter(
+        return model_post.objects.filter(
             is_published=False, 
             created_at__lte=timezone.now()-timedelta(minutes=1)
         )
@@ -36,8 +35,9 @@ class PublicPosts:
 
 @shared_task()
 def publishing_posts():
+    post = Post
     publ_posts = PublicPosts()
-    filter_posts = publ_posts.get_ready_post_bubl()
+    filter_posts = publ_posts.get_ready_post_bubl(post)
     publ_posts.set_post_publ(filter_posts)
     if filter_posts:
         logger.info(f'{filter_posts}')
