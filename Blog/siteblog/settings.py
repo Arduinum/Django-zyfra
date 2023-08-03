@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from django.core.management import utils
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -23,7 +24,8 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') if os.getenv('DJANGO_SECRET_KEY') \
+    else utils.get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -94,7 +96,7 @@ DATABASES = {
     }
 }
 
-if os.getenv('TEST_NOW') == 'True':
+if os.getenv('TEST_NOW') == 'True' or not os.getenv('NAME'):
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': ':memory:'
