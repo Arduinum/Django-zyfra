@@ -16,8 +16,8 @@ jobs:
           architecture: 'x64'
           cache: 'pip'
       - name: Install dependencies
-      - run: |
-        pip install -r requirements.txt
-        python -m pip install --upgrade pip wheel
+        run: |
+          pip install -r requirements.txt
+          python -m pip install --upgrade pip wheel
       - name: Test with TestCase
-      - run: python manage.py test
+        run: python manage.py test
